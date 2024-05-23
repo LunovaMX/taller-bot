@@ -23,6 +23,16 @@ const MONGO_DB_NAME = 'db_bot'
  * Primero declaras los submenus 1.1 y 2.1, luego el 1 y 2 y al final el principal.
  */
 
+const flowCotizacion = addKeyword(
+
+)
+
+const flowRegistroDeCoche = addKeyword(
+
+)
+
+
+
 const flowSecundario = addKeyword(['2', 'siguiente']).addAnswer(['📄 Aquí tenemos el flujo secundario'])
 
 const flowDocs = addKeyword(['doc', 'documentacion', 'documentación']).addAnswer(
@@ -71,9 +81,9 @@ const flowPrincipal = addKeyword(['hola', 'ole', 'alo'])
     .addAnswer('🙌 Hola bienvenido a este *Chatbot*')
     .addAnswer(
         [
-            'te comparto los siguientes links de interes sobre el proyecto',
-            '👉 *doc* para ver la documentación',
-            '👉 *gracias*  para ver la lista de videos',
+            'Te comparto los siguientes links de interes sobre el taller',
+            '👉 *doc* Para hacer una cotización',
+            '👉 *gracias*  Informacion sobre el taller',
             '👉 *discord* unirte al discord',
         ],
         null,
