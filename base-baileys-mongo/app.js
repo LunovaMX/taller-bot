@@ -8,8 +8,8 @@ const MongoAdapter = require('@bot-whatsapp/database/mongo')
  * Declaramos las conexiones de Mongo
  */
 
-const MONGO_DB_URI = 'mongodb://0.0.0.0:27017'
-const MONGO_DB_NAME = 'db_bot'
+const MONGO_DB_URI = 'mongodb+srv://lunovamx:LYHan3dgxxOe0zFE@bottallermecanico.y3yqsii.mongodb.net/?retryWrites=true&w=majority&appName=BotTallerMecanico'
+const MONGO_DB_NAME = 'db_bot_taller_msj'
 
 /**
  * Aqui declaramos los flujos hijos, los flujos se declaran de atras para adelante, es decir que si tienes un flujo de este tipo:
@@ -23,13 +23,25 @@ const MONGO_DB_NAME = 'db_bot'
  * Primero declaras los submenus 1.1 y 2.1, luego el 1 y 2 y al final el principal.
  */
 
-const flowCotizacion = addKeyword(
+const flowClienteNuevo = addKeyword(['Cotizacion','coti'])
+    .addAnswer('Para realizar una cotización, necesito algunos datos de tu vehículo. Por favor, proporciona la siguiente información:')
+    .addAnswer('Marca:', { capture: true })
+    .addAnswer('Modelo:', { capture: true })
+    .addAnswer('Kilometraje:', { capture: true })
+    .addAnswer('Año:', { capture: true })
+    .addAnswer('Número de serie (VIN):', { capture: true })
+    .addAnswer(
+        '¿Necesitas ayuda para encontrar el número de serie (VIN) de tu vehículo? (Responde \'Sí\' o \'No\')',
+        { capture: true },
+        (ctx, { fallbacks }) => {
+            if (ctx.body.toLowerCase() === 'sí' || ctx.body.toLowerCase() === 'si') {
+                return flowInstruccionesVIN;
+            } else {
+                return flowAgendarCita;
+            }
+        }
+    );
 
-)
-
-const flowRegistroDeCoche = addKeyword(
-
-)
 
 
 
@@ -88,7 +100,7 @@ const flowPrincipal = addKeyword(['hola', 'ole', 'alo'])
         ],
         null,
         null,
-        [flowDocs, flowGracias, flowTuto, flowDiscord]
+        [flowDocs, flowGracias, flowTuto, flowDiscord, flowClienteNuevo]
     )
 
 const main = async () => {
