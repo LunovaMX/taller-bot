@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 const ClientSchema = new mongoose.Schema({
     sender_id: String,
@@ -10,4 +10,7 @@ const ClientSchema = new mongoose.Schema({
     carSerialNumber:{type: String, default: null}
 
 })
-module.exports = mongoose.model('client', ClientSchema)
+
+const ClientModel = mongoose.model('Client', ClientSchema);
+
+export default ClientModel;

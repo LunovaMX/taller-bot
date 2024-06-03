@@ -1,6 +1,6 @@
-import { addKeyword, EVENTS } from '@builderbot/bot';
-import { MongoAdapter as Database } from '@builderbot/database-mongo'
-import { BaileysProvider as Provider } from '@builderbot/provider-baileys'
+// import { addKeyword, EVENTS } from '@builderbot/bot';
+// import { MongoAdapter as Database } from '@builderbot/database-mongo'
+// import { BaileysProvider as Provider } from '@builderbot/provider-baileys'
 
 
 // const checkUserStatus = async (phoneNumber: string, database: Database): Promise<string> => {

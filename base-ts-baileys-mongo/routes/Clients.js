@@ -1,6 +1,6 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const Client = require('../models/Client');
+import Client from '../model/Client';
 
 // Add clients
 router.post('/createclient', async (req, res) => {
@@ -12,7 +12,7 @@ router.post('/createclient', async (req, res) => {
 
 // Get all clients
 router.get('/', async (req, res) => {
-	const clients = await Clients.find();
+	const clients = await Client.find();
 
 	res.json(clients);
 });
@@ -51,6 +51,6 @@ router.put('/put/:id', async(req, res) => {
 
 })
 
-module.exports = router;
+export default router;
 
 //FALTA CONFIGURAR ROUTER, SIRVE PARA PODER MANDAR DATOS Y PODER PROBAR LA BASE DE DATOS (INV. COMO HACER LA CONEXIÓN)

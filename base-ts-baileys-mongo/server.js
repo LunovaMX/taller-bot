@@ -1,10 +1,12 @@
 'use strict';
 
-require('dotenv').config()
-const express = require("express")
-const mongoose = require("mongoose")
-const bodyParser = require("body-parser")
-const cors = require("cors")
+import dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+
 const PORT = process.env.PORT || 3000;
 
 // create our express app
@@ -36,7 +38,7 @@ app.get("/", (req, res) => {
 
 
 // clients
-const ClientsRoute = require('./routes/Clients')
+import  ClientsRoute from './routes/Clients'
 app.use('/clients', ClientsRoute)
 
 // start server ( Este siempre va al final.)
