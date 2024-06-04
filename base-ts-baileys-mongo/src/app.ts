@@ -4,7 +4,15 @@ import { MongoAdapter as Database } from '@builderbot/database-mongo'
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys'
 import dotenv from 'dotenv';
 
-import flowNewCar from './flows/flowNewCar'; // Importa el flujo
+import {
+    flowNewCar,
+    flowWorkshopServices,
+    flowContactInfo,
+    flowInstagramInfo,
+    flowLocationInfo,
+    flowWelcome
+} from './index';
+
 
 
 dotenv.config();
@@ -67,7 +75,16 @@ const fullSamplesFlow = addKeyword<Provider, Database>(['samples', utils.setEven
 
 
 const main = async () => {
-    const adapterFlow = createFlow([welcomeFlow, registerFlow, fullSamplesFlow, flowNewCar])
+    const adapterFlow = createFlow([
+        welcomeFlow, 
+        registerFlow, 
+        fullSamplesFlow, 
+        flowNewCar, 
+        flowWorkshopServices,
+        flowContactInfo,
+        flowInstagramInfo,
+        flowLocationInfo,
+    ])
     
     const adapterProvider = createProvider(Provider)
         const adapterDB = new Database({
