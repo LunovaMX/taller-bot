@@ -1,8 +1,8 @@
 import { join } from 'path'
-import { createBot, createProvider, createFlow, addKeyword, utils } from '@builderbot/bot'
+import { createBot, createProvider, createFlow, addKeyword, utils, EVENTS } from '@builderbot/bot'
 import { MongoAdapter as Database } from '@builderbot/database-mongo'
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys'
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 import {
     flowNewCar,
@@ -33,22 +33,37 @@ const discordFlow = addKeyword<Provider, Database>('doc').addAnswer(
     }
 )
 
-const welcomeFlow = addKeyword<Provider, Database>(['hi', 'hello', 'hola'])
-    .addAnswer(`🙌 Hello welcome to this *Chatbot*`)
+const welcomeFlow = addKeyword<Provider, Database>(EVENTS.WELCOME)
+    .addAnswer(`🙌 Hola, bienvenido a este *Chatbot*`)
     .addAnswer(
         [
-            'I share with you the following links of interest about the project',
-            '👉 *doc* to view the documentation',
+            'Te comparto las siguientes opciones:',
+            '1. Ver información de autos nuevos',
+            '2. Servicios de taller',
+            '3. Información de contacto',
+            '4. Información de Instagram',
+            '5. Información de ubicación',
+            'Por favor, escribe el número de tu elección:',
         ].join('\n'),
-        { delay: 800, capture: true },
-        async (ctx, { fallBack }) => {
-            if (!ctx.body.toLocaleLowerCase().includes('doc')) {
-                return fallBack('You should type *doc*')
+        { capture: true },
+        async (ctx, { gotoFlow, fallBack }) => {
+            const choice = ctx.body.trim();
+            switch (choice) {
+                case '1':
+                    return gotoFlow(flowNewCar);
+                case '2':
+                    return gotoFlow(flowWorkshopServices);
+                case '3':
+                    return gotoFlow(flowContactInfo);
+                case '4':
+                    return gotoFlow(flowInstagramInfo);
+                case '5':
+                    return gotoFlow(flowLocationInfo);
+                default:
+                    return fallBack('Por favor, escribe un número válido (1-5).');
             }
-            return
-        },
-        [discordFlow]
-    )
+        }
+    );
 
 const registerFlow = addKeyword<Provider, Database>(utils.setEvent('REGISTER_FLOW'))
     .addAnswer(`What is your name?`, { capture: true }, async (ctx, { state }) => {
