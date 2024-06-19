@@ -10,7 +10,9 @@ import {
     flowContactInfo,
     flowInstagramInfo,
     flowLocationInfo,
-    flowWelcome
+    flowWelcome,
+    deactivateBotFlow, 
+    activateBotFlow
 } from './index';
 
 
@@ -34,16 +36,16 @@ const discordFlow = addKeyword<Provider, Database>('doc').addAnswer(
 )
 
 const welcomeFlow = addKeyword<Provider, Database>(EVENTS.WELCOME)
-    .addAnswer(`🙌 Hola, bienvenido a este *Chatbot*`)
+    .addAnswer('🙌 ¡Hola! Bienvenido a nuestro *Chatbot*.')
     .addAnswer(
         [
-            'Te comparto las siguientes opciones:',
-            '1. Ver información de autos nuevos',
+            '¿En qué puedo ayudarte hoy?',
+            '1. Generar una cotización',
             '2. Servicios de taller',
             '3. Información de contacto',
-            '4. Información de Instagram',
-            '5. Información de ubicación',
-            'Por favor, escribe el número de tu elección:',
+            '4. Información de nuestro Instagram',
+            '5. Ubicación de nuestro taller',
+            'Por favor, escribe el número de tu elección:'
         ].join('\n'),
         { capture: true },
         async (ctx, { gotoFlow, fallBack }) => {
@@ -60,11 +62,10 @@ const welcomeFlow = addKeyword<Provider, Database>(EVENTS.WELCOME)
                 case '5':
                     return gotoFlow(flowLocationInfo);
                 default:
-                    return fallBack('Por favor, escribe un número válido (1-5).');
+                    return fallBack('Lo siento, no entendí tu elección. Por favor, escribe un número válido (1-5).');
             }
         }
     );
-
 const registerFlow = addKeyword<Provider, Database>(utils.setEvent('REGISTER_FLOW'))
     .addAnswer(`What is your name?`, { capture: true }, async (ctx, { state }) => {
         await state.update({ name: ctx.body })
@@ -89,6 +90,7 @@ const fullSamplesFlow = addKeyword<Provider, Database>(['samples', utils.setEven
 
 
 
+
 const main = async () => {
     const adapterFlow = createFlow([
         welcomeFlow, 
@@ -99,6 +101,8 @@ const main = async () => {
         flowContactInfo,
         flowInstagramInfo,
         flowLocationInfo,
+        deactivateBotFlow, 
+        activateBotFlow
     ])
     
     const adapterProvider = createProvider(Provider)
@@ -111,6 +115,7 @@ const main = async () => {
         flow: adapterFlow,
         provider: adapterProvider,
         database: adapterDB,
+        
     })
 
     adapterProvider.server.post(

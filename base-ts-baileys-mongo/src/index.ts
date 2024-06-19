@@ -4,6 +4,10 @@ import flowContactInfo from './flows/flowContactInfo';
 import flowInstagramInfo from './flows/flowInstagramInfo';
 import flowLocationInfo from './flows/flowLocationInfo';
 import flowWelcome from './flows/flowWelcome';
+import deactivateBotFlow from './flows/agents/flowActivateBot';
+import activateBotFlow from './flows/agents/flowDeactiveBot';
+
+
 
 export {
     flowNewCar,
@@ -11,5 +15,7 @@ export {
     flowContactInfo,
     flowInstagramInfo,
     flowLocationInfo,
-    flowWelcome
+    flowWelcome,
+    deactivateBotFlow, 
+    activateBotFlow
 };
