@@ -2,6 +2,8 @@ import { addKeyword } from '@builderbot/bot';
 import { MongoAdapter as Database } from '@builderbot/database-mongo'
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys'
 import { join } from 'path'
+import flowDescribeProblem from './flowDescribeProblem';
+
 
 
 const normalizeInput = (input: string) => {
@@ -93,6 +95,8 @@ const flowNewCar = addKeyword<Provider, Database>(['coche', 'auto', 'vehículo']
             await flowDynamic('¡Perfecto! La información ha sido guardada correctamente. Gracias. 😊');
             
             // TODO: Enviar al flujo de que quiere hacer
+
+            return gotoFlow(flowDescribeProblem);
 
         } else if (['no', 'nó'].includes(response)) {
             await flowDynamic('Entiendo, vamos a ingresar la información nuevamente.');

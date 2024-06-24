@@ -6,7 +6,11 @@ import flowLocationInfo from './flows/flowLocationInfo';
 import flowWelcome from './flows/flowWelcome';
 import deactivateBotFlow from './flows/agents/flowActivateBot';
 import activateBotFlow from './flows/agents/flowDeactiveBot';
+import flowDescribeProblem from './flows/flowDescribeProblem';
 
+export { activateBot } from './handlers/activateBotHandler';
+export { deactivateBot } from './handlers/deactivateBotHandler';
+import  humanFlow  from './handlers/botAgent'
 
 
 export {
@@ -17,5 +21,7 @@ export {
     flowLocationInfo,
     flowWelcome,
     deactivateBotFlow, 
-    activateBotFlow
+    activateBotFlow,
+    flowDescribeProblem,
+    humanFlow,
 };

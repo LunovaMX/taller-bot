@@ -1,43 +1,52 @@
-import { addKeyword, EVENTS } from '@builderbot/bot';
+import { addKeyword } from '@builderbot/bot';
 import { MongoAdapter as Database } from '@builderbot/database-mongo'
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys'
 
-
-// const checkUserStatus = async (phoneNumber: string, database: Database): Promise<string> => {
-//     Query MongoDB to find the user by phoneNumber
-//     const user = await Database.collection('users').findOne({ phoneNumber });
-//     if (!user) {
-//         return 'new';
-//     } else if (user.registered) {
-//         return 'registered';
-//     } else {
-//         return 'info_only';
-//     }
-    
-// };
+import {
+    flowNewCar,
+    flowWorkshopServices,
+    flowContactInfo,
+    flowInstagramInfo,
+    flowLocationInfo,
+} from '../index';
 
 
-const welcomeFlow = addKeyword<Provider, Database>(EVENTS.WELCOME)
-    .addAnswer('¡Hola! Bienvenido a nuestro servicio de cotización de autos 🚗. ¿Cómo puedo ayudarte hoy?')
+const flowWelcome = addKeyword<Provider, Database>("EVENTS")
+    .addAnswer('🙌 ¡Hola! Bienvenido a nuestro Chatbot B One Automotriz.')
     .addAnswer(
-        'Por favor, responde con *Nuevo* si es tu primera vez, *Cotización* si deseas una cotización o *Ayuda* si necesitas otro tipo de información.',
+        [
+            '¿En qué puedo ayudarte hoy?',
+            '1. Generar una cotización',
+            '2. Servicios de taller',
+            '3. Información de contacto',
+            '4. Información de nuestro Instagram',
+            '5. Ubicación de nuestro taller',
+            '6. Hablar con un humano',
+            'Por favor, escribe el número de tu elección:'
+        ].join('\n'),
         { capture: true },
-        async (ctx, { gotoFlow, database }) => {
-            // const phoneNumber = ctx.from; // Adjust this according to how your provider handles sender info
-            // const userStatus = await checkUserStatus(phoneNumber, database);+
-            // const userStutus 0 'new'
-
-            // switch (userStatus) {
-            //     case 'new':
-            //         //return gotoFlow(registerNewCustomerFlow);
-            //     case 'registered':
-            //         //return gotoFlow(fetchCustomerDataFlow);
-            //     case 'info_only':
-            //         return 'Parece que ya nos has contactado antes pero aún no completaste tu registro. ¿Quieres hacerlo ahora?';
-            //     default:
-            //         return 'No entendí tu respuesta. Intenta de nuevo.';
-            // }
+        async (ctx, { gotoFlow, fallBack, state, flowDynamic, endFlow }) => {
+            const choice = ctx.body.trim();
+            switch (choice) {
+                case '1':
+                    return gotoFlow(flowNewCar);
+                case '2':
+                    return gotoFlow(flowWorkshopServices);
+                case '3':
+                    return gotoFlow(flowContactInfo);
+                case '4':
+                    return gotoFlow(flowInstagramInfo);
+                case '5':
+                    return gotoFlow(flowLocationInfo);
+                case '6':
+                    await flowDynamic('¡Perfecto! Un agente se pondrá en contacto contigo muy pronto para seguir con el proceso de cotización. Gracias por tu paciencia. 😊');
+                    await state.update({ botActive: false });
+                    return endFlow();
+                default:
+                    return fallBack('Lo siento, no entendí tu elección. Por favor, escribe un número válido (1-6).');
+            }
         }
     );
 
-export default welcomeFlow;
+export default flowWelcome;
+
