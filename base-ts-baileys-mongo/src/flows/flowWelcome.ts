@@ -8,6 +8,7 @@ import {
     flowContactInfo,
     flowInstagramInfo,
     flowLocationInfo,
+    deactivateBot,
 } from '../index';
 
 
@@ -21,7 +22,6 @@ const flowWelcome = addKeyword<Provider, Database>("EVENTS")
             '3. Información de contacto',
             '4. Información de nuestro Instagram',
             '5. Ubicación de nuestro taller',
-            '6. Hablar con un humano',
             'Por favor, escribe el número de tu elección:'
         ].join('\n'),
         { capture: true },
@@ -38,10 +38,6 @@ const flowWelcome = addKeyword<Provider, Database>("EVENTS")
                     return gotoFlow(flowInstagramInfo);
                 case '5':
                     return gotoFlow(flowLocationInfo);
-                case '6':
-                    await flowDynamic('¡Perfecto! Un agente se pondrá en contacto contigo muy pronto para seguir con el proceso de cotización. Gracias por tu paciencia. 😊');
-                    await state.update({ botActive: false });
-                    return endFlow();
                 default:
                     return fallBack('Lo siento, no entendí tu elección. Por favor, escribe un número válido (1-6).');
             }

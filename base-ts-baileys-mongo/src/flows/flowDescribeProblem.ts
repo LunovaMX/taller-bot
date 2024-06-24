@@ -2,6 +2,10 @@ import { addKeyword } from '@builderbot/bot';
 import { MongoAdapter as Database } from '@builderbot/database-mongo';
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys';
 
+import {
+    deactivateBot,
+} from '../index';
+
 const workingHoursStart = 10; // Hora de inicio del servicio (9 AM)
 const workingHoursEnd = 18; // Hora de fin del servicio (6 PM)
 
@@ -32,8 +36,7 @@ const flowDescribeProblem = addKeyword<Provider, Database>(['problema', 'reparac
         if (['sí', 'si'].includes(response)) {
             if (isWithinWorkingHours()) {
                 await flowDynamic('¡Perfecto! Un agente se pondrá en contacto contigo muy pronto para seguir con el proceso de cotización. Gracias por tu paciencia. 😊');
-                await state.update({botActive:false})
-                return endFlow();
+                return gotoFlow(deactivateBot);
             } else {
                 await flowDynamic('Gracias por tu paciencia. Actualmente estamos fuera de nuestro horario de servicio. Un agente se pondrá en contacto contigo mañana para continuar con tu cotización. Que tengas un buen día. 😊');
             }

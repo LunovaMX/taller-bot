@@ -4,12 +4,11 @@ import flowContactInfo from './flows/flowContactInfo';
 import flowInstagramInfo from './flows/flowInstagramInfo';
 import flowLocationInfo from './flows/flowLocationInfo';
 import flowWelcome from './flows/flowWelcome';
-import deactivateBotFlow from './flows/agents/flowActivateBot';
-import activateBotFlow from './flows/agents/flowDeactiveBot';
+
 import flowDescribeProblem from './flows/flowDescribeProblem';
 
-export { activateBot } from './handlers/activateBotHandler';
-export { deactivateBot } from './handlers/deactivateBotHandler';
+import  activateBot  from './handlers/activateBotHandler';
+import  deactivateBot  from './handlers/deactivateBotHandler';
 import  humanFlow  from './handlers/botAgent'
 
 
@@ -20,8 +19,8 @@ export {
     flowInstagramInfo,
     flowLocationInfo,
     flowWelcome,
-    deactivateBotFlow, 
-    activateBotFlow,
+    deactivateBot, 
+    activateBot,
     flowDescribeProblem,
     humanFlow,
 };
