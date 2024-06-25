@@ -8,6 +8,7 @@ import {flowWelcome} from '../index';
 
 const humanFlow = addKeyword<Provider, Database>(EVENTS.WELCOME)
     .addAction(async (ctx, { state, endFlow, gotoFlow }) => {
+        
         const userBotStatus = await state.get('botActive');
         if (userBotStatus === undefined) {
             await state.update({ botActive: true });

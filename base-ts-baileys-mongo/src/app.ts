@@ -1,4 +1,4 @@
-import { createBot, createProvider, createFlow } from '@builderbot/bot';
+import { createBot, createProvider, createFlow, addKeyword } from '@builderbot/bot';
 import { MongoAdapter as Database } from '@builderbot/database-mongo';
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys';
 import { PORT, MONGO_DB_URI, MONGO_DB_NAME, PHONE_NUMBER } from './config';
@@ -17,6 +17,9 @@ import {
 } from './index';
 
 
+
+
+
 const main = async () => {
     try {
         const adapterFlow = createFlow([
@@ -29,8 +32,6 @@ const main = async () => {
             deactivateBot,
             activateBot,
             flowDescribeProblem,
-            activateBot,
-            deactivateBot,
             humanFlow
         ]);
 
@@ -46,7 +47,18 @@ const main = async () => {
             database: adapterDB,
         });
 
+
+        // Manejador para los mensajes enviados por ti
+        // TODO apagar el bot en cuanto se escriba un mensaje propio
+        provider.on('FromMe', async (ctx) => {
+            console.log('Msg: ', ctx.body);
+            console.log('From: ', ctx.from);
+            
+        });
+
         initializeServer(provider, handleCtx);
+
+
 
         httpServer(+PORT);
     } catch (error) {
