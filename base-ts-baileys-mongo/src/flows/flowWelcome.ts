@@ -9,6 +9,7 @@ import {
     flowInstagramInfo,
     flowLocationInfo,
     deactivateBot,
+    flowCheckCars,
 } from '../index';
 
 
@@ -29,7 +30,7 @@ const flowWelcome = addKeyword<Provider, Database>("EVENTS")
             const choice = ctx.body.trim();
             switch (choice) {
                 case '1':
-                    return gotoFlow(flowNewCar);
+                    return gotoFlow(flowCheckCars);
                 case '2':
                     return gotoFlow(flowWorkshopServices);
                 case '3':

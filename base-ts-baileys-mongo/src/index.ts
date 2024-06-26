@@ -4,6 +4,7 @@ import flowContactInfo from './flows/flowContactInfo';
 import flowInstagramInfo from './flows/flowInstagramInfo';
 import flowLocationInfo from './flows/flowLocationInfo';
 import flowWelcome from './flows/flowWelcome';
+import flowCheckCars from './flows/flowCheckCars';
 
 import flowDescribeProblem from './flows/flowDescribeProblem';
 
@@ -13,6 +14,7 @@ import  humanFlow  from './handlers/botAgent'
 
 
 export {
+    flowCheckCars,
     flowNewCar,
     flowWorkshopServices,
     flowContactInfo,
@@ -23,4 +25,5 @@ export {
     activateBot,
     flowDescribeProblem,
     humanFlow,
+    
 };

@@ -1,5 +1,5 @@
-import { addKeyword } from '@builderbot/bot';
-import { MongoAdapter as Database } from '@builderbot/database-mongo'
+import { MemoryDB, addKeyword } from '@builderbot/bot';
+import { MongoAdapter as Database, MongoAdapter } from '@builderbot/database-mongo'
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys'
 import { join } from 'path'
 import flowDescribeProblem from './flowDescribeProblem';
@@ -13,7 +13,7 @@ const normalizeInput = (input: string) => {
 const flowNewCar = addKeyword<Provider, Database>(['coche', 'auto', 'vehículo'])
     .addAnswer('¡Hola! Vamos a registrar tu coche. 😊', { capture: false })
     .addAnswer('Si no sabes alguna respuesta, puedes escribir "no sé".', { capture: false })
-    .addAnswer('Primero, ¿Cuál es la *marca* del coche?', { capture: true }, async (ctx, { state, fallBack }) => {
+    .addAnswer('Primero, ¿Cuál es la *marca* del coche?', { capture: true }, async (ctx, { state, fallBack,flowDynamic }) => {
         const brand = normalizeInput(ctx.body);
         if (['no sé', 'nose', 'n/a'].includes(brand)) {
             await state.update({ brand: null });
@@ -88,12 +88,24 @@ const flowNewCar = addKeyword<Provider, Database>(['coche', 'auto', 'vehículo']
         const confirmationMessage = `Marca: ${brand !== null ? brand : 'No especificado'}\nModelo: ${model !== null ? model : 'No especificado'}\nKilometraje: ${mileage !== null ? mileage : 'No especificado'}\nAño: ${year !== null ? year : 'No especificado'}\nNúmero de Serie: ${serialNumber !== null ? serialNumber : 'No especificado'}`;
         await flowDynamic(confirmationMessage);
     })
-    .addAnswer('¿Es correcta esta información? Responde con "sí" o "no".', { capture: true }, async (ctx, { flowDynamic, gotoFlow, state, fallBack }) => {
+    .addAnswer('¿Es correcta esta información? Responde con "sí" o "no".', { capture: true }, async (ctx, { flowDynamic, gotoFlow, state, fallBack, database }) => {
         const response = ctx.body.trim().toLowerCase();
 
         if (['sí', 'si'].includes(response)) {
             await flowDynamic('¡Perfecto! La información ha sido guardada correctamente. Gracias. 😊');
             
+
+             // Guardar la información en la base de datos
+        const userData = {
+            phone: ctx.from, // Número de teléfono del usuario
+            brand: state.get('brand'),
+            model: state.get('model'),
+            mileage: state.get('mileage'),
+            year: state.get('year'),
+            serialNumber: state.get('serialNumber'),
+        };
+
+        await database.db.collection('users').insertOne(userData);
             // TODO: Enviar al flujo de que quiere hacer
 
             return gotoFlow(flowDescribeProblem);

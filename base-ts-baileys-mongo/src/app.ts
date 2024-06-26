@@ -1,19 +1,20 @@
-import { createBot, createProvider, createFlow, addKeyword } from '@builderbot/bot';
+import { createBot, createProvider, createFlow } from '@builderbot/bot';
 import { MongoAdapter as Database } from '@builderbot/database-mongo';
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys';
 import { PORT, MONGO_DB_URI, MONGO_DB_NAME, PHONE_NUMBER } from './config';
 import { initializeServer } from './server/initializeServer';
 import {
-    flowWelcome,
     flowNewCar,
     flowWorkshopServices,
     flowContactInfo,
     flowInstagramInfo,
     flowLocationInfo,
-    deactivateBot,
+    flowWelcome,
+    deactivateBot, 
     activateBot,
     flowDescribeProblem,
-    humanFlow
+    humanFlow,
+    flowCheckCars
 } from './index';
 
 
@@ -24,6 +25,7 @@ const main = async () => {
     try {
         const adapterFlow = createFlow([
             flowWelcome,
+            flowCheckCars,
             flowNewCar,
             flowWorkshopServices,
             flowContactInfo,
@@ -32,7 +34,7 @@ const main = async () => {
             deactivateBot,
             activateBot,
             flowDescribeProblem,
-            humanFlow
+            humanFlow,
         ]);
 
         const adapterProvider = createProvider(Provider,{usePairingCode: true, phoneNumber: PHONE_NUMBER });
