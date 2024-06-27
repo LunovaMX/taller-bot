@@ -14,9 +14,13 @@ import {
     activateBot,
     flowDescribeProblem,
     humanFlow,
-    flowCheckCars
+    flowCheckCars,
+    flowCheckCars2,
+    flowCheckCars3,
+    flowEditCar,
+    flowEditCarField,
+    flowEditCarConfirmation,
 } from './index';
-
 
 
 
@@ -26,6 +30,11 @@ const main = async () => {
         const adapterFlow = createFlow([
             flowWelcome,
             flowCheckCars,
+            flowCheckCars2,
+            flowCheckCars3,
+            flowEditCar,
+            flowEditCarField,
+            flowEditCarConfirmation,
             flowNewCar,
             flowWorkshopServices,
             flowContactInfo,
@@ -53,10 +62,10 @@ const main = async () => {
         // Manejador para los mensajes enviados por ti
         // TODO apagar el bot en cuanto se escriba un mensaje propio
         provider.on('FromMe', async (ctx) => {
-            console.log('Msg: ', ctx.body);
+            console.log('Msg: ', ctx);
             console.log('From: ', ctx.from);
-            
         });
+        
 
         initializeServer(provider, handleCtx);
 
