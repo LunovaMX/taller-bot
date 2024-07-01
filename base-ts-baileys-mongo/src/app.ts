@@ -21,6 +21,7 @@ import {
     flowEditCarField,
     flowEditCarConfirmation,
 } from './index';
+import { logPhoneNumber, removePhoneNumber } from './handlers/phoneLogger';
 
 
 
@@ -62,8 +63,13 @@ const main = async () => {
         // Manejador para los mensajes enviados por ti
         // TODO apagar el bot en cuanto se escriba un mensaje propio
         provider.on('FromMe', async (ctx) => {
-            console.log('Msg: ', ctx);
-            console.log('From: ', ctx.from);
+            const messageText = ctx.body.trim().toLowerCase();
+
+            if (messageText === 'activar bot') {
+                removePhoneNumber(ctx.from); // Eliminar el número de teléfono del archivo
+            } else {
+                logPhoneNumber(ctx.from); // Registrar el número de teléfono en el archivo
+            } 
         });
         
 
