@@ -2,7 +2,7 @@ import { addKeyword } from '@builderbot/bot';
 import { MongoAdapter as Database } from '@builderbot/database-mongo';
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys';
 
-const flowLocationInfo = addKeyword<Provider, Database>(['ubicacion', 'direccion'])
+const flowLocationInfo = addKeyword<Provider, Database>('/FLOWLOCATIONINFO')
     .addAnswer('🏠 Nuestra ubicación es Oscar Wilde 248, San Jeronimo, 64630 Monterrey, N.L.')
     .addAnswer('Aquí tienes el enlace de Google Maps para que nos encuentres fácilmente: https://maps.app.goo.gl/K2XobXHCy8wNJGhF9')
     .addAnswer('¿Hay algo más en lo que te pueda ayudar? 😊', { capture: true }, async (ctx, { fallBack,flowDynamic }) => {

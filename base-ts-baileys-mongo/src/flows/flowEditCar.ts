@@ -6,7 +6,7 @@ const normalizeInput = (input) => {
     return input.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 };
 
-const flowEditCar = addKeyword(['editar coche', 'modificar coche'])
+const flowEditCar = addKeyword('/FLOWEDITCAR')
     .addAnswer('Vamos a editar la información de tu coche. 😊', { capture: false })
     .addAnswer('¿Qué información deseas modificar? Responde con el número correspondiente:\n1. Marca\n2. Modelo\n3. Kilometraje\n4. Año\n5. Número de serie', { capture: true }, async (ctx, { gotoFlow,state, fallBack,flowDynamic }) => {
         const response = normalizeInput(ctx.body);

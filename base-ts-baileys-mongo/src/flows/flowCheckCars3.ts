@@ -9,7 +9,7 @@ const normalizeInput = (input) => {
     return input.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 };
 
-const flowCheckCars3 = addKeyword(['revisar coches', 'checar coches', 'ver coches'])
+const flowCheckCars3 = addKeyword('/FLOWCHECKCARS3')
     .addAnswer('¿Deseas editar la información de este coche? Responde con "sí" o "no".', { capture: true }, async (ctx, { flowDynamic, state, fallBack, gotoFlow, database }) => {
         const response = normalizeInput(ctx.body);
 

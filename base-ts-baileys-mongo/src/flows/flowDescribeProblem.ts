@@ -14,7 +14,7 @@ const isWithinWorkingHours = () => {
     return currentHour >= workingHoursStart && currentHour < workingHoursEnd;
 };
 
-const flowDescribeProblem = addKeyword<Provider, Database>(['problema', 'reparación', 'servicio'])
+const flowDescribeProblem = addKeyword<Provider, Database>('/FLOWDESCRIBEPROBLEM')
     .addAnswer('Ahora, por favor cuéntanos, ¿cuál es el problema principal con tu coche o qué servicio necesitas? 🚗', { capture: true }, async (ctx, { state }) => {
         await state.update({ problemDescription: ctx.body.trim() });
     })

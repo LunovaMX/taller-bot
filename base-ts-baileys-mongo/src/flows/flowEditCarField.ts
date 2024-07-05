@@ -2,7 +2,7 @@ import { addKeyword } from '@builderbot/bot';
 import flowEditCarConfirmation from './flowEditCarConfirmation';
 
 
-const flowEditCarField = addKeyword(['editar campo'])
+const flowEditCarField = addKeyword('/FLOWEDITCARFIELD')
     .addAnswer('Ingrese el nuevo valor:', { capture: true }, async (ctx, { state, fallBack, flowDynamic, gotoFlow }) => {
         console.log('Editfield')
         const editField = state.get('editField');

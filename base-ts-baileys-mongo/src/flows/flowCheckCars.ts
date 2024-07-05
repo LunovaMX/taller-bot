@@ -2,7 +2,7 @@ import { addKeyword } from '@builderbot/bot';
 import flowCheckCars2 from './flowCheckCars2';
 import flowNewCar from './flowNewCar';
 
-const flowCheckCars = addKeyword(['revisar coches', 'checar coches', 'ver coches'])
+const flowCheckCars = addKeyword("/FLOWCHECKCARS")
     .addAnswer('Vamos a revisar los coches que ya tienes registrados.', { capture: false }, async (ctx, { gotoFlow, flowDynamic, state, database }) => {
         const userId = ctx.from;
         const cars = await database.db.collection('users').find({ phone: userId }).toArray();

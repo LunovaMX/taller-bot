@@ -2,7 +2,7 @@ import { addKeyword } from '@builderbot/bot';
 import { MongoAdapter as Database } from '@builderbot/database-mongo';
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys';
 
-const flowWorkshopServices = addKeyword<Provider, Database>(['servicios'])
+const flowWorkshopServices = addKeyword<Provider, Database>('/FLOWWORKSHOPSERVICES')
     .addAnswer('🚗 ¡Estamos aquí para cuidar de tu vehículo! Ofrecemos una variedad de servicios para mantener tu auto en excelente estado:')
     .addAnswer(
         `🔧 Servicios que ofrecemos:

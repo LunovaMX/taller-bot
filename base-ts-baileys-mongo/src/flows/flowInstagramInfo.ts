@@ -2,7 +2,7 @@ import { addKeyword } from '@builderbot/bot';
 import { MongoAdapter as Database } from '@builderbot/database-mongo';
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys';
 
-const flowInstagramInfo = addKeyword<Provider, Database>(['instagram', 'redes sociales'])
+const flowInstagramInfo = addKeyword<Provider, Database>('/FLOWINSTAGRAMINFO')
     .addAnswer('📸 ¡Nos encantaría que nos siguieras en Instagram! Encuéntranos como @b1_automotriz para estar al tanto de nuestras últimas actualizaciones y ofertas exclusivas.')
     .addAnswer('Aquí tienes el enlace directo: https://www.instagram.com/b1_automotriz/')
     .addAnswer(

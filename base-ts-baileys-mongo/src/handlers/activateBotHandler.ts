@@ -8,6 +8,7 @@ const activateBot = addKeyword<Provider, Database>('/ACTIVATEBOT')
         await state.update({ botActive: true });
 
         await removePhoneNumber(ctx.from); // Eliminar el número de teléfono del archivo
+
         await provider.vendor.chatModify(
             {
                 removeChatLabel: {

@@ -66,9 +66,25 @@ const main = async () => {
             const messageText = ctx.body.trim().toLowerCase();
 
             if (messageText === 'activar bot') {
-                removePhoneNumber(ctx.from); // Eliminar el número de teléfono del archivo
+                await provider.vendor.chatModify(
+                    {
+                        removeChatLabel: {
+                            labelId: '1', // Reemplaza con el ID real de la etiqueta "humano"
+                        }
+                    },
+                    ctx.key.remoteJid
+                );
+                await removePhoneNumber(ctx.from); // Eliminar el número de teléfono del archivo
             } else {
-                logPhoneNumber(ctx.from); // Registrar el número de teléfono en el archivo
+                await provider.vendor.chatModify(
+                    {
+                        addChatLabel: {
+                            labelId: '1' // Reemplaza con el ID real de la etiqueta "HUMAN"
+                        }
+                    },
+                    ctx.key.remoteJid
+                );
+                await logPhoneNumber(ctx.from); // Registrar el número de teléfono en el archivo
             } 
         });
         

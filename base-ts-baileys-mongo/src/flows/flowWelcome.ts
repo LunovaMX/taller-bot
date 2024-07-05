@@ -13,7 +13,7 @@ import {
 } from '../index';
 
 
-const flowWelcome = addKeyword<Provider, Database>("EVENTS")
+const flowWelcome = addKeyword<Provider, Database>('/FLOWWELCOME')
     .addAnswer('🙌 ¡Hola! Bienvenido a nuestro Chatbot B One Automotriz.')
     .addAnswer(
         [

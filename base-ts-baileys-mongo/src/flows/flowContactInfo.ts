@@ -6,7 +6,7 @@ import {
     deactivateBot,
 } from '../index';
 
-const flowContactInfo = addKeyword<Provider, Database>(['contacto', 'informacion de contacto'])
+const flowContactInfo = addKeyword<Provider, Database>('/FLOWCONTACTINFO')
     .addAnswer('¡Hola! 😊 Si necesitas contactarnos, puedes llamarnos al número 81 1481 8453', { capture: false })
     .addAnswer('También puedes enviarnos un correo electrónico a bone.automotriz@gmail.com.', { capture: false })
     .addAnswer('Si prefieres hablar con uno de nuestros agentes por este medio, escribe la palabra "agente".', { capture: false })
