@@ -26,7 +26,7 @@ const flowWelcome = addKeyword<Provider, Database>('/FLOWWELCOME')
             'Por favor, escribe el número de tu elección:'
         ].join('\n'),
         { capture: true },
-        async (ctx, { gotoFlow, fallBack, state, flowDynamic, endFlow }) => {
+        async (ctx, { gotoFlow, fallBack }) => {
             const choice = ctx.body.trim();
             switch (choice) {
                 case '1':

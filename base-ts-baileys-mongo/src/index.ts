@@ -10,6 +10,9 @@ import flowCheckCars3 from './flows/flowCheckCars3';
 import flowEditCar from './flows/flowEditCar';
 import flowEditCarField from './flows/flowEditCarField';
 import flowEditCarConfirmation from './flows/flowEditCarConfirmation';
+import flowDeleteCar from './flows/flowDeleteCar';
+import flowDeletePostOptions from './flows/flowDeletePostOptions';
+
 
 
 import flowDescribeProblem from './flows/flowDescribeProblem';
@@ -23,6 +26,8 @@ export {
     flowCheckCars,
     flowCheckCars2,
     flowCheckCars3,
+    flowDeleteCar,
+    flowDeletePostOptions,
     flowEditCar,
     flowEditCarField,
     flowEditCarConfirmation,

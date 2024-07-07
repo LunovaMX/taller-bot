@@ -20,6 +20,8 @@ import {
     flowEditCar,
     flowEditCarField,
     flowEditCarConfirmation,
+    flowDeleteCar,
+    flowDeletePostOptions,
 } from './index';
 import { logPhoneNumber, removePhoneNumber } from './handlers/phoneLogger';
 
@@ -45,6 +47,9 @@ const main = async () => {
             activateBot,
             flowDescribeProblem,
             humanFlow,
+            flowDeleteCar,
+            flowDeletePostOptions,
+            
         ]);
 
         const adapterProvider = createProvider(Provider,{usePairingCode: true, phoneNumber: PHONE_NUMBER });
