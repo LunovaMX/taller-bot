@@ -37,4 +37,5 @@ RUN npm cache clean --force && pnpm install --production --ignore-scripts \
     && addgroup -g 1001 -S nodejs && adduser -S -u 1001 nodejs \
     && rm -rf $PNPM_HOME/.npm $PNPM_HOME/.node-gyp
 
-CMD ["npm", "start"]
+CMD ["pm2-runtime", "start", "./src/app.js", "--cron", "0 */12 * * *"]
+

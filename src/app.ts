@@ -52,7 +52,12 @@ const main = async () => {
             
         ]);
 
-        const adapterProvider = createProvider(Provider,{usePairingCode: true, phoneNumber: PHONE_NUMBER });
+        const adapterProvider = createProvider(Provider,{
+            usePairingCode: true, 
+            phoneNumber: PHONE_NUMBER,
+            experimentalStore: true,  // Significantly reduces resource consumption
+            timeRelease: 10800000, });
+            
         const adapterDB = new Database({
             dbUri: MONGO_DB_URI,
             dbName: MONGO_DB_NAME,
