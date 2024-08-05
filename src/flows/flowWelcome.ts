@@ -40,7 +40,7 @@ const flowWelcome = addKeyword<Provider, Database>('/FLOWWELCOME')
                 case '5':
                     return gotoFlow(flowLocationInfo);
                 default:
-                    return fallBack('Lo siento, no entendí tu elección. Por favor, escribe un número válido (1-6).');
+                    return fallBack('Lo siento, no entendí tu elección. Por favor, escribe un número válido ( 1 - 6 ).');
             }
         }
     );
