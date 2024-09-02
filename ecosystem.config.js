@@ -2,7 +2,7 @@ module.exports = {
     apps: [
       {
         name: 'my-app',
-        script: './src/app.ts',
+        script: './dist/app.js',  // Apunta al archivo JavaScript compilado
         instances: 1,
         autorestart: true,
         watch: false,
@@ -13,4 +13,3 @@ module.exports = {
       }
     ]
   };
-  
