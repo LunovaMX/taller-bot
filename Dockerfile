@@ -38,6 +38,7 @@ RUN npm cache clean --force && pnpm install --production --ignore-scripts \
     && rm -rf $PNPM_HOME/.npm $PNPM_HOME/.node-gyp
 
 RUN npm install pm2 -g
+RUN npm install
 
 CMD ["pm2-runtime", "start", "./src/app.ts", "--cron", "0 */12 * * *"]
 
