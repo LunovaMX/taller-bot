@@ -10,13 +10,14 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 COPY package*.json *-lock.yaml ./
 COPY rollup.config.js ./
 
-# Install dependencies and build the project
+# Clean pnpm cache and install dependencies
 RUN apk add --no-cache --virtual .gyp \
     python3 \
     make \
     g++ \
     && apk add --no-cache git \
-    && pnpm install \
+    && pnpm cache clean --force \ 
+    && pnpm install \ 
     && pnpm run build
 
 # Stage 2: Deployment
@@ -34,8 +35,9 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json /app/*-lock.yaml ./
 COPY --from=builder /app/rollup.config.js ./
 
-# Install only production dependencies
+# Clean pnpm cache and install only production dependencies
 RUN corepack enable && corepack prepare pnpm@latest --activate \
+    && pnpm cache clean --force \  
     && pnpm install --production --ignore-scripts \
     && addgroup -g 1001 -S nodejs && adduser -S -u 1001 nodejs \
     && chown -R nodejs:nodejs /app
