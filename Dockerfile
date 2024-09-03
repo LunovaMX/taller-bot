@@ -3,15 +3,20 @@ FROM node:21-alpine3.18 as builder
 
 WORKDIR /app
 
+# Install pnpm globally
+RUN npm install -g pnpm
+
 # Enable corepack and install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
+ENV PNPM_HOME=/usr/local/share/pnpm
+ENV PATH=$PNPM_HOME:$PATH
 
 # Copy package files, rollup config, TypeScript source files, and assets
 COPY package*.json *-lock.yaml ./
 COPY rollup.config.js ./
 COPY tsconfig.json ./
 COPY src ./src
-COPY assets ./assets 
+COPY assets ./assets
 
 # Install dependencies and build the project
 RUN apk add --no-cache --virtual .gyp \
@@ -31,6 +36,14 @@ ARG PORT
 ENV PORT $PORT
 EXPOSE $PORT
 
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Enable corepack and install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+ENV PNPM_HOME=/usr/local/share/pnpm
+ENV PATH=$PNPM_HOME:$PATH
+
 # Copy necessary files from builder stage
 COPY --from=builder /app/assets ./assets
 COPY --from=builder /app/dist ./dist
@@ -38,8 +51,7 @@ COPY --from=builder /app/package*.json /app/*-lock.yaml ./
 COPY --from=builder /app/rollup.config.js ./
 
 # Install only production dependencies
-RUN corepack enable && corepack prepare pnpm@latest --activate \
-    && pnpm install --production --ignore-scripts \
+RUN pnpm install --production --ignore-scripts \
     && addgroup -g 1001 -S nodejs && adduser -S -u 1001 nodejs \
     && chown -R nodejs:nodejs /app
 
