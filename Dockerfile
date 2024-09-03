@@ -6,9 +6,11 @@ WORKDIR /app
 # Enable corepack and install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy package files and rollup config
+# Copy package files, rollup config, and TypeScript source files
 COPY package*.json *-lock.yaml ./
 COPY rollup.config.js ./
+COPY tsconfig.json ./
+COPY src ./src  
 
 # Install dependencies and build the project
 RUN apk add --no-cache --virtual .gyp \
@@ -16,7 +18,7 @@ RUN apk add --no-cache --virtual .gyp \
     make \
     g++ \
     && apk add --no-cache git \
-    && pnpm install \ 
+    && pnpm install \
     && pnpm run build
 
 # Stage 2: Deployment
