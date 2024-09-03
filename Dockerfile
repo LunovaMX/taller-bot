@@ -18,6 +18,9 @@ COPY tsconfig.json ./
 COPY src ./src
 COPY assets ./assets
 
+# Verify if bot_sessions folder exists and copy it
+RUN if [ -d "./bot_sessions" ]; then cp -r ./bot_sessions /app/bot_sessions; fi
+
 # Install dependencies and build the project
 RUN apk add --no-cache --virtual .gyp \
     python3 \
@@ -53,6 +56,9 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json /app/*-lock.yaml ./
 COPY --from=builder /app/rollup.config.js ./
 COPY --from=builder /app/ecosystem.config.cjs ./
+
+# Copy bot_sessions folder if it exists
+COPY --from=builder /app/bot_sessions ./bot_sessions
 
 # Install only production dependencies
 RUN pnpm install --production --ignore-scripts \
