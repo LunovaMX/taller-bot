@@ -6,8 +6,11 @@ WORKDIR /app
 # Enable corepack and install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Install dependencies and build the project
+# Copy package files and rollup config
 COPY package*.json *-lock.yaml ./
+COPY rollup.config.js ./
+
+# Install dependencies and build the project
 RUN apk add --no-cache --virtual .gyp \
     python3 \
     make \
@@ -29,6 +32,7 @@ EXPOSE $PORT
 COPY --from=builder /app/assets ./assets
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json /app/*-lock.yaml ./
+COPY --from=builder /app/rollup.config.js ./
 
 # Install only production dependencies
 RUN corepack enable && corepack prepare pnpm@latest --activate \
