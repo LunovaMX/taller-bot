@@ -54,9 +54,6 @@ COPY --from=builder /app/package*.json /app/*-lock.yaml ./
 COPY --from=builder /app/rollup.config.js ./
 COPY --from=builder /app/ecosystem.config.cjs ./
 
-# Mount the persistent volume for bot_sessions
-VOLUME ["/app/bot_sessions"]
-
 # Install only production dependencies
 RUN pnpm install --production --ignore-scripts \
     && addgroup -g 1001 -S nodejs && adduser -S -u 1001 nodejs \
