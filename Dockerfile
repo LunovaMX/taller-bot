@@ -27,8 +27,8 @@ RUN apk add --no-cache --virtual .gyp \
     && pnpm install \
     && pnpm run build
 
-# Ensure ecosystem.config.js is copied if used by PM2
-COPY ecosystem.config.js ./
+# Ensure ecosystem.config.cjs is copied if used by PM2
+COPY ecosystem.config.cjs ./
 
 # Stage 2: Deployment
 FROM node:21-alpine3.18 as deploy
@@ -52,7 +52,7 @@ COPY --from=builder /app/assets ./assets
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json /app/*-lock.yaml ./
 COPY --from=builder /app/rollup.config.js ./
-COPY --from=builder /app/ecosystem.config.js ./
+COPY --from=builder /app/ecosystem.config.cjs ./
 
 # Install only production dependencies
 RUN pnpm install --production --ignore-scripts \
@@ -66,4 +66,4 @@ RUN pnpm add pm2 -g
 USER nodejs
 
 # Start the application using PM2
-CMD ["pm2-runtime", "start", "ecosystem.config.js"]
+CMD ["pm2-runtime", "start", "ecosystem.config.cjs"]
