@@ -7,7 +7,7 @@ import { promisify } from 'util';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const filePath = path.join(__dirname, '../../disabledBotPhones.txt');
+const filePath = path.join(__dirname, '../disabledBotPhones.txt');
 
 // Promisify fs functions for better readability
 const readFileAsync = promisify(fs.readFile);
