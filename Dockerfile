@@ -14,8 +14,7 @@ RUN apk add --no-cache --virtual .gyp \
     g++ \
     && apk add --no-cache git \
     && pnpm install \
-    && pnpm run build \
-    && apk del .gyp
+    && pnpm run build
 
 # Stage 2: Deployment
 FROM node:21-alpine3.18 as deploy
@@ -34,7 +33,6 @@ COPY --from=builder /app/package*.json /app/*-lock.yaml ./
 # Install only production dependencies
 RUN corepack enable && corepack prepare pnpm@latest --activate \
     && pnpm install --production --ignore-scripts \
-    && pnpm store prune \
     && addgroup -g 1001 -S nodejs && adduser -S -u 1001 nodejs \
     && chown -R nodejs:nodejs /app
 
