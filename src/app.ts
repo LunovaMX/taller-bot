@@ -75,7 +75,8 @@ const main = async () => {
         provider.on('FromMe', async (ctx) => {
             const messageText = ctx.body.trim().toLowerCase();
 
-            if (messageText === 'activar bot') {
+
+            if (messageText === 'gracias por comunicarte a b one automotriz') {
                 await provider.vendor.chatModify(
                     {
                         removeChatLabel: {

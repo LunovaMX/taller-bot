@@ -6,7 +6,7 @@ import {
     deactivateBot,
 } from '../index';
 
-const workingHoursStart = 10; // Hora de inicio del servicio (9 AM)
+const workingHoursStart = 9; // Hora de inicio del servicio (9 AM)
 const workingHoursEnd = 18; // Hora de fin del servicio (6 PM)
 
 const isWithinWorkingHours = () => {

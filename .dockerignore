@@ -1,5 +1,12 @@
 dist/*
-node_modules
+# Ignorar todo en node_modules
+node_modules/*
+
+# Excluir una carpeta específica
+!node_modules/@builderbot/
+
+# Incluir todos los archivos dentro de la carpeta específica
+!node_modules/@builderbot/**
 .env
 
 *_sessions
